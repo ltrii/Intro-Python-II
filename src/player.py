@@ -8,3 +8,6 @@ class Player:
 
     def add_item(self, item):
         self.itembag.append(item)
+
+    def itembag_contents(self):
+        return ' - '.join([str(i) for i in self.itembag])

@@ -137,6 +137,10 @@ while run == 1:
                 curplayer.curroom = move
         elif choice == 'Q':
             quit()
+        elif choice == 'I':
+            print('Current inventory: ')
+            print(curplayer.itembag_contents())
+            input('Press anything to continue')
         else:
             print('Unrecognized command. Pick a direction or Q to quit.')
             time.sleep(.5)
