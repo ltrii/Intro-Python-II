@@ -25,6 +25,10 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+items = {
+    'stick':    Item('Stick', 'A small wooden stick.'),
+}
+
 
 # Link rooms together
 
@@ -55,7 +59,7 @@ room['narrow'].n_to = 'treasure'
 #TREASURE
 room['treasure'].s_to = 'narrow'
 
-room['outside'].add_item = Item('Stick', 'A small wooden stick.')
+room['outside'].add_item(items['stick'])
 #
 # Main
 #
@@ -97,45 +101,73 @@ while run == 1:
     print("Possible directions: " + room[curplayer.curroom].get_exits() + "\n")
 
     choice = input('Make a choice ==> ')
+    choiceword = choice.split()
 
     if len(choice) == 1:
-        if choice == 'n':
+        choice = choice.upper()
+        if choice == 'N':
             move = room[curplayer.curroom].get_room_in_direction('n')
             if move == None:
                 print('You can not move in that direction')
+                input("Press anything to continue..")
             else:
                 curplayer.curroom = move
-
-        if choice == 'e':
+        elif choice == 'E':
             move = room[curplayer.curroom].get_room_in_direction('e')
             if move == None:
                 print('You can not move in that direction')
                 input("Press anything to continue..")
             else:
                 curplayer.curroom = move
-
-        if choice == 's':
+        elif choice == 'S':
             move = room[curplayer.curroom].get_room_in_direction('s')
             if move == None:
                 print('You can not move in that direction')
+                input("Press anything to continue..")
             else:
                 curplayer.curroom = move
-
-        if choice == 'w':
+        elif choice == 'W':
             move = room[curplayer.curroom].get_room_in_direction('w')
             if move == None:
                 print('You can not move in that direction')
                 input("Press anything to continue..")
             else:
                 curplayer.curroom = move
-
-        if choice == 'q':
+        elif choice == 'Q':
             quit()
-
         else:
             print('Unrecognized command. Pick a direction or Q to quit.')
             time.sleep(.5)
             print('Resetting...')
             time.sleep(1.5)
 
+    elif len(choiceword) == 2:
+        if choiceword[0] == 'get':
+            try:
+                for index, item in enumerate(room[curplayer.curroom].contains):
+                    if(item.name == choiceword[1]):
+                        curplayer.add_item(items[choiceword[1]])
+                        room[curplayer.curroom.contains.remove(choiceword[1])]
+                        print(f'You picked up a {choiceword[1]}')
+                        time.sleep(3)
+                        break
+                    elif(index == len(room[curplayer.curroom].contains)-1):
+                        print("There is no item in this room with that name")
+                        time.sleep(3)
+                        break
+            except AttributeError:
+                for index, item in enumerate(room[curplayer.curroom].contains):
+                    if(item == choiceword[1]):
+                        curplayer.add_item(items[choiceword[1]])
+                        room[curplayer.curroom.contains.remove(choiceword[1])]
+                        print(f'You picked up a {choiceword[1]}')
+                        time.sleep(3)
+                        break
+                    elif(index == len(room[curplayer.curroom].contains)-1):
+                        print("There is no item in this room with that name")
+                        time.sleep(3)
+                        break
+        if choiceword[0] == 'drop':
+            print('Drop!')
+            input('Hold')
 

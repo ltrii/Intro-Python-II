@@ -12,18 +12,14 @@ class Room:
         self.e_to = None
         self.s_to = None
         self.w_to = None    
-    def __str__(self):
-        roomstr = f"{self.name}\n\n"
-        roomstr += f"   {self.description}\n\n"
-        roomstr += f"Possible directions: {self.get_exits()}\n"
-        return roomstr
+    # def __str__(self):
+    #     roomstr = f"{self.name}\n\n"
+    #     roomstr += f"   {self.description}\n\n"
+    #     roomstr += f"Possible directions: {self.get_exits()}\n"
+    #     return roomstr
 
     def get_items_str(self):
-        return ', '.join([str(i) for i in self.contains])
-    
-    def print_contents(self):
-        for i in self.contains:
-            print(i.name)
+        return ' - '.join([str(i) for i in self.contains])
 
     def get_exits(self):
         exits = []
@@ -50,4 +46,5 @@ class Room:
             return None
 
     def add_item(self, item):
+        self.contains = []
         self.contains.append(item)
