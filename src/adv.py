@@ -27,6 +27,7 @@ earlier adventurers. The only exit is to the south."""),
 
 items = {
     'stick':    Item('Stick', 'A small wooden stick.'),
+    'sword':    Item('Sword', 'A really sharp stabby thing made of metal')
 }
 
 
@@ -60,6 +61,7 @@ room['narrow'].n_to = 'treasure'
 room['treasure'].s_to = 'narrow'
 
 room['outside'].add_item(items['stick'])
+room['treasure'].add_item(items['sword'])
 #
 # Main
 #
@@ -168,6 +170,14 @@ while run == 1:
                         time.sleep(2)
                         break
         if choiceword[0] == 'drop':
-            print('Drop!')
-            input('Hold')
+            for index, item in enumerate(curplayer.itembag):
+                if(curplayer.itembag[index] == items[choiceword[1]]):
+                    curplayer.itembag.remove(item)
+                    room[curplayer.curroom].contains.append(item)
+                    print(f'You dropped a {choiceword[1]}')
+                    time.sleep(2)
+                elif(index == len(curplayer.itembag)-1):
+                    print("There is no item in your inventory that matches that name")
+                    time.sleep(2)
+                    break
 
