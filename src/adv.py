@@ -145,27 +145,27 @@ while run == 1:
         if choiceword[0] == 'get':
             try:
                 for index, item in enumerate(room[curplayer.curroom].contains):
-                    if(item.name == choiceword[1]):
-                        curplayer.add_item(items[choiceword[1]])
-                        room[curplayer.curroom.contains.remove(choiceword[1])]
+                    if(item.lowname == choiceword[1].lower()):
+                        curplayer.add_item(items[choiceword[1].lower()])
+                        room[curplayer.curroom].contains.remove(items[choiceword[1].lower()])
                         print(f'You picked up a {choiceword[1]}')
-                        time.sleep(3)
+                        time.sleep(2)
                         break
                     elif(index == len(room[curplayer.curroom].contains)-1):
                         print("There is no item in this room with that name")
-                        time.sleep(3)
+                        time.sleep(2)
                         break
             except AttributeError:
                 for index, item in enumerate(room[curplayer.curroom].contains):
-                    if(item == choiceword[1]):
-                        curplayer.add_item(items[choiceword[1]])
-                        room[curplayer.curroom.contains.remove(choiceword[1])]
+                    if(item.lowname == choiceword[1].lower()):
+                        curplayer.add_item(items[choiceword[1].lower()])
+                        room[curplayer.curroom].contains.remove(items[choiceword[1].lower()])
                         print(f'You picked up a {choiceword[1]}')
-                        time.sleep(3)
+                        time.sleep(2)
                         break
                     elif(index == len(room[curplayer.curroom].contains)-1):
                         print("There is no item in this room with that name")
-                        time.sleep(3)
+                        time.sleep(2)
                         break
         if choiceword[0] == 'drop':
             print('Drop!')
