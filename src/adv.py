@@ -1,6 +1,7 @@
 from room import Room
 from item import Item
 from player import Player
+import os
 
 # Declare all the rooms
 
@@ -26,24 +27,40 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+# room['outside'].n_to = room['foyer']
+# room['foyer'].s_to = room['outside']
+# room['foyer'].n_to = room['overlook']
+# room['foyer'].e_to = room['narrow']
+# room['overlook'].s_to = room['foyer']
+# room['narrow'].w_to = room['foyer']
+# room['narrow'].n_to = room['treasure']
+# room['treasure'].s_to = room['narrow']
 
+#OUTSIDE
+room['outside'].n_to = 'foyer'
+
+#FOYER
+room['foyer'].s_to = 'outside'
+room['foyer'].n_to = 'overlook'
+room['foyer'].e_to = 'narrow'
+
+#OVERLOOK
+room['overlook'].s_to = 'foyer'
+
+#NARROW
+room['narrow'].w_to = 'foyer'
+room['narrow'].n_to = 'treasure'
+
+#TREASURE
+room['treasure'].s_to = 'narrow'
+
+room['outside'].add_item = Item('Stick', 'A small wooden stick.')
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
 
-player1 = Player('dude','outside')
-
-print(player1)
 
 # Write a loop that:
 #
@@ -56,6 +73,58 @@ print(player1)
 #
 # If the user enters "q", quit the game.
 
-print(player1.curroom)
-print(player1.curroom.description)
+print('Welcome to the Game! \n')
+
+playername = input("Please choose a name: ")
+
+curplayer = Player(playername)
+
+run = 1
+
+while run == 1:
+    if os.name == 'posix':
+        os.system('clear')
+    else:
+        os.system('cls')
+    print("Current Player: " + curplayer.name + "\n")
+    print(room[curplayer.curroom].name)
+    print(room[curplayer.curroom].description + "\n")
+    print(room[curplayer.curroom].get_items_str())
+    print(room[curplayer.curroom].get_exits())
+
+    choice = input('Make a choice ==> ')
+
+    if choice == 'n':
+        move = room[curplayer.curroom].get_room_in_direction('n')
+        if move == None:
+            print('You can not move in that direction')
+        else:
+            curplayer.curroom = move
+
+    if choice == 'e':
+        move = room[curplayer.curroom].get_room_in_direction('e')
+        if move == None:
+            print('You can not move in that direction')
+            input("Press anything to continue..")
+        else:
+            curplayer.curroom = move
+
+    if choice == 's':
+        move = room[curplayer.curroom].get_room_in_direction('s')
+        if move == None:
+            print('You can not move in that direction')
+        else:
+            curplayer.curroom = move
+
+    if choice == 'w':
+        move = room[curplayer.curroom].get_room_in_direction('w')
+        if move == None:
+            print('You can not move in that direction')
+            input("Press anything to continue..")
+        else:
+            curplayer.curroom = move
+
+    if choice == 'q':
+        quit()
+
 
