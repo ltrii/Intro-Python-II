@@ -2,6 +2,7 @@ from room import Room
 from item import Item
 from player import Player
 import os
+import time
 
 # Declare all the rooms
 
@@ -89,42 +90,52 @@ while run == 1:
     print("Current Player: " + curplayer.name + "\n")
     print(room[curplayer.curroom].name)
     print(room[curplayer.curroom].description + "\n")
-    print(room[curplayer.curroom].get_items_str())
-    print(room[curplayer.curroom].get_exits())
+    if room[curplayer.curroom].contains == []:
+        print("There appears to be nothing around" + "\n")
+    else:
+        print("You see: " + room[curplayer.curroom].get_items_str())
+    print("Possible directions: " + room[curplayer.curroom].get_exits() + "\n")
 
     choice = input('Make a choice ==> ')
 
-    if choice == 'n':
-        move = room[curplayer.curroom].get_room_in_direction('n')
-        if move == None:
-            print('You can not move in that direction')
-        else:
-            curplayer.curroom = move
+    if len(choice) == 1:
+        if choice == 'n':
+            move = room[curplayer.curroom].get_room_in_direction('n')
+            if move == None:
+                print('You can not move in that direction')
+            else:
+                curplayer.curroom = move
 
-    if choice == 'e':
-        move = room[curplayer.curroom].get_room_in_direction('e')
-        if move == None:
-            print('You can not move in that direction')
-            input("Press anything to continue..")
-        else:
-            curplayer.curroom = move
+        if choice == 'e':
+            move = room[curplayer.curroom].get_room_in_direction('e')
+            if move == None:
+                print('You can not move in that direction')
+                input("Press anything to continue..")
+            else:
+                curplayer.curroom = move
 
-    if choice == 's':
-        move = room[curplayer.curroom].get_room_in_direction('s')
-        if move == None:
-            print('You can not move in that direction')
-        else:
-            curplayer.curroom = move
+        if choice == 's':
+            move = room[curplayer.curroom].get_room_in_direction('s')
+            if move == None:
+                print('You can not move in that direction')
+            else:
+                curplayer.curroom = move
 
-    if choice == 'w':
-        move = room[curplayer.curroom].get_room_in_direction('w')
-        if move == None:
-            print('You can not move in that direction')
-            input("Press anything to continue..")
-        else:
-            curplayer.curroom = move
+        if choice == 'w':
+            move = room[curplayer.curroom].get_room_in_direction('w')
+            if move == None:
+                print('You can not move in that direction')
+                input("Press anything to continue..")
+            else:
+                curplayer.curroom = move
 
-    if choice == 'q':
-        quit()
+        if choice == 'q':
+            quit()
+
+        else:
+            print('Unrecognized command. Pick a direction or Q to quit.')
+            time.sleep(.5)
+            print('Resetting...')
+            time.sleep(1.5)
 
 

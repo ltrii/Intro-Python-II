@@ -28,14 +28,14 @@ class Room:
     def get_exits(self):
         exits = []
         if self.n_to is not None:
-            exits.append('n')
+            exits.append('N')
         if self.e_to is not None:
-            exits.append('e')
+            exits.append('E')
         if self.s_to is not None:
-            exits.append('s')
+            exits.append('S')
         if self.w_to is not None:
-            exits.append('w')
-        return ", ".join(exits)
+            exits.append('W')
+        return " | ".join(exits)
 
     def get_room_in_direction(self, direction):
         if direction == "n":

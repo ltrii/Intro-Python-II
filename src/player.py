@@ -6,5 +6,5 @@ class Player:
         self.itembag = []
         self.curroom = current_room
 
-    def addItem(self, item):
+    def add_item(self, item):
         self.itembag.append(item)
