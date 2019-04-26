@@ -1,8 +1,33 @@
 from room import Room
-from item import Item
+from item import Item, Key
 from player import Player
 import os
 import time
+
+def get_exits(thisroom):
+    hidden = []
+    exits = []
+    if thisroom.n_to is not None:
+        if room[thisroom.n_to].hidden == True:
+            hidden.append('N')
+        else:
+            exits.append('N')
+    if thisroom.e_to is not None:
+        if room[thisroom.e_to].hidden == True:
+            hidden.append('E')
+        else:
+            exits.append('E')
+    if thisroom.s_to is not None:
+        if room[thisroom.s_to].hidden == True:
+            hidden.append('S')
+        else:
+            exits.append('S')
+    if thisroom.w_to is not None:
+        if room[thisroom.w_to].hidden == True:
+            hidden.append('W')
+        else:
+            exits.append('W')
+    return " | ".join(exits)
 
 # Declare all the rooms
 
@@ -22,12 +47,19 @@ to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. It appears the only exit is to the south."""),
+
+    'hidden room': Room("Hidden Room", """You walk down a small staircase to a hidden room in the back of the Cave below the overlook. There might be something nice here...""", None, True),
+
+    'trail': Room("Trail", """Outdoor trail connecting the Cave opening to a small pond"""),
+
+    'pond': Room("Small Pond", """You may have dropped something here on your initial walk up to the Cave...""")
 }
 
 items = {
     'stick':    Item('Stick', 'A small wooden stick.'),
-    'sword':    Item('Sword', 'A really sharp stabby thing made of metal')
+    'sword':    Item('Sword', 'A really sharp stabby thing made of metal'),
+    'door-key':   Key('Door-Key', 'A key used for opening a door... Someone told you it would work somewhere in the Cave...?', 'door', 'hidden room')
 }
 
 
@@ -44,6 +76,14 @@ items = {
 
 #OUTSIDE
 room['outside'].n_to = 'foyer'
+room['outside'].s_to = 'trail'
+
+#TRAIL
+room['trail'].n_to = 'outside'
+room['trail'].s_to = 'pond'
+
+#POND
+room['pond'].n_to = 'trail'
 
 #FOYER
 room['foyer'].s_to = 'outside'
@@ -59,9 +99,19 @@ room['narrow'].n_to = 'treasure'
 
 #TREASURE
 room['treasure'].s_to = 'narrow'
+room['treasure'].w_to = 'hidden room'
 
+#HIDDEN ROOM
+room['hidden room'].e_to = 'treasure'
+
+
+#ITEM POPULATE
 room['outside'].add_item(items['stick'])
 room['treasure'].add_item(items['sword'])
+room['pond'].add_item(items['door-key'])
+
+
+
 #
 # Main
 #
@@ -100,7 +150,7 @@ while run == 1:
         print("There appears to be nothing around" + "\n")
     else:
         print("You see: " + room[curplayer.curroom].get_items_str())
-    print("Possible directions: " + room[curplayer.curroom].get_exits() + "\n")
+    print("Possible directions: " + get_exits(room[curplayer.curroom]) + "\n")
 
     choice = input('Make a choice ==> ')
     choiceword = choice.split()
