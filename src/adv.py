@@ -29,6 +29,13 @@ def get_exits(thisroom):
             exits.append('W')
     return " | ".join(exits)
 
+def roomlock(move):
+    if room[move].locked == True:
+        print('Room is locked')
+        input('Press anything to continue...')
+    else:
+        curplayer.curroom = move
+
 # Declare all the rooms
 
 room = {
@@ -49,7 +56,7 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. It appears the only exit is to the south."""),
 
-    'hidden room': Room("Hidden Room", """You walk down a small staircase to a hidden room in the back of the Cave below the overlook. There might be something nice here...""", None, True),
+    'hidden room': Room("Hidden Room", """You walk down a small staircase to a hidden room in the back of the Cave below the overlook. There might be something nice here...""", None, True, True),
 
     'trail': Room("Trail", """Outdoor trail connecting the Cave opening to a small pond"""),
 
@@ -163,28 +170,28 @@ while run == 1:
                 print('You can not move in that direction')
                 input("Press anything to continue..")
             else:
-                curplayer.curroom = move
+                roomlock(move)
         elif choice == 'E':
             move = room[curplayer.curroom].get_room_in_direction('e')
             if move == None:
                 print('You can not move in that direction')
                 input("Press anything to continue..")
             else:
-                curplayer.curroom = move
+                roomlock(move)
         elif choice == 'S':
             move = room[curplayer.curroom].get_room_in_direction('s')
             if move == None:
                 print('You can not move in that direction')
                 input("Press anything to continue..")
             else:
-                curplayer.curroom = move
+                roomlock(move)
         elif choice == 'W':
             move = room[curplayer.curroom].get_room_in_direction('w')
             if move == None:
                 print('You can not move in that direction')
                 input("Press anything to continue..")
             else:
-                curplayer.curroom = move
+                roomlock(move)
         elif choice == 'Q':
             quit()
         elif choice == 'I':
