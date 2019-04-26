@@ -32,7 +32,17 @@ def get_exits(thisroom):
 def roomlock(move):
     if room[move].locked == True:
         print('Room is locked')
-        input('Press anything to continue...')
+        time.sleep(1)
+        room[move].hidden = False
+        for index, item in enumerate(curplayer.itembag):
+            if curplayer.itembag[index].name == room[curplayer.curroom].name:
+                print('You have a key to open this door! Opening...')
+                room[move].locked = False
+                time.sleep(2)
+                curplayer.curroom = move
+            else:
+                print('Turning around...')
+                time.sleep(2)
     else:
         curplayer.curroom = move
 
