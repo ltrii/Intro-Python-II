@@ -13,8 +13,7 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 
 ## Tasks
 
-* Add classes for rooms and the player
-* Add a simple parser that reads user input and performs actions
+
 * Add items to the game that the user can carry around
 * Make rooms able to hold multiple items
 * Make the player able to carry multiple items
@@ -46,7 +45,8 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
   * Add functionality to the main loop that prints out all the items that are
     visible to the player when they are in that room.
 
-* Add capability to add `Item`s to the player's inventory. The inventory can
+* Add capability to add `Item`s to the player's* Add classes for rooms and the player
+* Add a simple parser that reads user input and performs actions inventory. The inventory can
   also be a `list` of items "in" the player, similar to how `Item`s can be in a
   `Room`.
 
